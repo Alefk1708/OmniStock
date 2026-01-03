@@ -4,9 +4,32 @@ import Image from "next/image";
 import { useState } from "react";
 
 export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [messageColor, setMessageColor] = useState(true);
-  
+
+  const handleSubmit = async () => {
+        const res = await fetch("/api/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            setMessageColor(false)
+            setMessage(data.message)
+        } else {
+            setMessageColor(true)
+            setMessage("Login realizado com sucesso")
+            setEmail("")
+            setPassword("")
+        }
+  }
 
   return (
     <div className="bg-white w-screen h-screen flex items-center justify-center">
@@ -39,6 +62,10 @@ export default function LoginPage() {
         <form
           action="/POST"
           className="flex flex-col gap-[4vh] md:gap-[6vh] justify-center items-center"
+          onSubmit={(e) => {
+            e.preventDefault() 
+            handleSubmit()
+          }}
         >
           <div className="flex flex-col gap-[2.5vh] md:gap-[3vh] justify-center items-center w-full">
             
@@ -47,6 +74,8 @@ export default function LoginPage() {
               type="text"
               name="email"
               placeholder="E-mail"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-[85%] md:w-[80%] h-[7vh] text-[4.5vw] md:text-[1.2vw] text-black px-[4vw] md:px-[1vw] bg-blue-100 outline-blue-800 rounded-[2vw] md:rounded-[0.5vw] border-[0.3vw] md:border-[0.1vw] border-slate-400 shadow-[#00000059] shadow-[0_2vw_1.5vw_0] md:shadow-[0_0.7vw_0.5vw_0] transition-all duration-300 hover:scale-[1.02]"
             />
             
@@ -55,6 +84,8 @@ export default function LoginPage() {
               type="password"
               name="password"
               placeholder="Senha"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-[85%] md:w-[80%] h-[7vh] text-[4.5vw] md:text-[1.2vw] text-black px-[4vw] md:px-[1vw] bg-blue-100 outline-blue-800 rounded-[2vw] md:rounded-[0.5vw] border-[0.3vw] md:border-[0.1vw] border-slate-400 shadow-[#00000059] shadow-[0_2vw_1.5vw_0] md:shadow-[0_0.7vw_0.5vw_0] transition-all duration-300 hover:scale-[1.02]"
             />
           </div>
