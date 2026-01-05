@@ -15,6 +15,6 @@ export async function POST(request) {
         return NextResponse.json({message: "Codigo de verificação enviado para seu email"}, {status: 200})
     } catch (error) {
         console.log(error)
-        NextResponse.json({message: "erro ao comunicar com a api"}, {status: 500})
+        NextResponse.json({message: "Erro ao comunicar com a api"}, {status: 500})
     }
 }

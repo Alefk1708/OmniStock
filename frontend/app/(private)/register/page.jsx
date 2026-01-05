@@ -51,8 +51,30 @@ export default function LoginPage() {
   const isPasswordValid = Object.values(validations).every(Boolean);
 
   const handleSubmit = async () => {
-    // Lógica de envio
-    console.log("Enviando...");
+    const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        password,
+      }),
+    })
+
+    if (res.ok) {
+        setMessage("Conta criada com sucesso!");
+        setMessageColor(true);
+        setName("");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+    } else {
+        const data = await res.json();
+        setMessage(data.message);
+        setMessageColor(false);
+    }
   };
 
   return (
