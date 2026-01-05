@@ -51,7 +51,7 @@ export default function LoginPage() {
           </div>
           
           {/* TÍTULO LOGIN: Aumentado no mobile para legibilidade */}
-          <h1 className="text-[7vw] md:text-[1.7vw]">Login</h1>
+          <h1 className="text-[7vw] md:text-[1.7vw]">Conecte-se</h1>
         </div>
 
         {/* TÍTULO BEM-VINDO */}
@@ -91,7 +91,7 @@ export default function LoginPage() {
           </div>
 
           {/* BOTÃO ENTRAR */}
-          <button className="w-[85%] md:w-[80%] h-[7vh] text-[5vw] md:text-[1.4vw] bg-blue-800 rounded-[3vw] md:rounded-[1.5vw] shadow-[#00000059] shadow-[0_2vw_1.5vw_0] md:shadow-[0_0.7vw_0.5vw_0] transition-all duration-300 hover:scale-[1.02]">
+          <button disabled={!email || !password} className={`w-[85%] md:w-[80%] h-[7vh] text-[5vw] md:text-[1.4vw] rounded-[3vw] md:rounded-[1.5vw] transition-all duration-300 ${email && password ? 'bg-blue-800 hover:scale-[1.02] text-white shadow-lg' : 'bg-gray-400 text-gray-200 cursor-not-allowed'}`}>
             Entrar
           </button>
         </form>
